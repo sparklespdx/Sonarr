@@ -28,9 +28,9 @@ namespace NzbDrone.Core.DecisionEngine
         {
             var comparers = new List<CompareDelegate>
             {
+                ComparePreferredWordScore,
                 CompareQuality,
                 CompareLanguage,
-                ComparePreferredWordScore,
                 CompareProtocol,
                 CompareEpisodeCount,
                 CompareEpisodeNumber,

@@ -37,6 +37,18 @@ namespace NzbDrone.Core.DecisionEngine.Specifications
 
         public bool IsUpgradable(QualityProfile qualityProfile, LanguageProfile languageProfile, QualityModel currentQuality, Language currentLanguage, int currentScore, QualityModel newQuality, Language newLanguage, int newScore)
         {
+            //if (!IsPreferredWordUpgradable(currentScore, newScore))
+            //{
+            //    _logger.Debug("Existing item has a better preferred word score, skipping");
+            //    return false;
+            //}
+
+            if (IsPreferredWordUpgradable(currentScore, newScore))
+            {
+                _logger.Debug("New item has a better preferred word score");
+                return true;
+            }
+
             var qualityComparer = new QualityModelComparer(qualityProfile);
             var qualityCompare = qualityComparer.Compare(newQuality?.Quality, currentQuality.Quality);
 
@@ -75,14 +87,7 @@ namespace NzbDrone.Core.DecisionEngine.Specifications
                 return false;
             }
             
-            if (!IsPreferredWordUpgradable(currentScore, newScore))
-            {
-                _logger.Debug("Existing item has a better preferred word score, skipping");
-                return false;
-            }
-
-            _logger.Debug("New item has a better preferred word score");
-            return true;
+            return false;
         }
 
         public bool QualityCutoffNotMet(QualityProfile profile, QualityModel currentQuality, QualityModel newQuality = null)
