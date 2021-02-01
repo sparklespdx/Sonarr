@@ -37,5 +37,5 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E03280
     apt-get install -y mono-complete sqlite3 libcurl3 mediainfo
 
 COPY --from=0 /data/_output_linux /app
-WORDIR /app
+WORKDIR /app
 CMD mono --debug Sonarr.exe -nobrowser -data=/config
