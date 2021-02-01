@@ -38,4 +38,4 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E03280
 
 COPY --from=0 /data/_output_linux /app
 WORKDIR /app
-CMD mono Sonarr.exe -nobrowser -data=/config
+CMD mono --debug Sonarr.exe -nobrowser -data=/config
