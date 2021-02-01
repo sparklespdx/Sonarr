@@ -46,6 +46,14 @@ namespace NzbDrone.Core.MediaFiles.EpisodeImport.Specifications
                     continue;
                 }
 
+                var episodeFilePreferredWordScore = _episodeFilePreferredWordCalculator.Calculate(localEpisode.Series, episodeFile);
+
+                if (preferredWordScore < episodeFilePreferredWordScore)
+                {
+                    _logger.Debug("This file isn't a preferred word upgrade for all episodes. Skipping {0}", localEpisode.Path);
+                    return Decision.Reject("Not a preferred word upgrade for existing episode file(s)");
+                }
+
                 var qualityCompare = qualityComparer.Compare(localEpisode.Quality.Quality, episodeFile.Quality.Quality);
                 var languageCompare = languageComparer.Compare(localEpisode.Language, episodeFile.Language);
 
@@ -74,13 +82,6 @@ namespace NzbDrone.Core.MediaFiles.EpisodeImport.Specifications
                     return Decision.Reject("Not a language upgrade for existing episode file(s)");
                 }
 
-                var episodeFilePreferredWordScore = _episodeFilePreferredWordCalculator.Calculate(localEpisode.Series, episodeFile);
-
-                if (qualityCompare == 0 && preferredWordScore < episodeFilePreferredWordScore)
-                {
-                    _logger.Debug("This file isn't a preferred word upgrade for all episodes. Skipping {0}", localEpisode.Path);
-                    return Decision.Reject("Not a preferred word upgrade for existing episode file(s)");
-                }
             }
 
             return Decision.Accept();
