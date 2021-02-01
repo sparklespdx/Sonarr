@@ -43,11 +43,11 @@ namespace NzbDrone.Core.DecisionEngine.Specifications
                 return false;
             }
 
-            //if (IsPreferredWordUpgradable(currentScore, newScore))
-            //{
-            //    _logger.Debug("New item has a better preferred word score");
-            //    return true;
-            //}
+            if (IsPreferredWordUpgradable(currentScore, newScore))
+            {
+                _logger.Debug("New item has a better preferred word score");
+                return true;
+            }
 
             var qualityComparer = new QualityModelComparer(qualityProfile);
             var qualityCompare = qualityComparer.Compare(newQuality?.Quality, currentQuality.Quality);
