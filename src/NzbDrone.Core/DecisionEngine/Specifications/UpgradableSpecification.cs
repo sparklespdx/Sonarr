@@ -37,11 +37,11 @@ namespace NzbDrone.Core.DecisionEngine.Specifications
 
         public bool IsUpgradable(QualityProfile qualityProfile, LanguageProfile languageProfile, QualityModel currentQuality, Language currentLanguage, int currentScore, QualityModel newQuality, Language newLanguage, int newScore)
         {
-            if (!IsPreferredWordUpgradable(currentScore, newScore))
-            {
-                _logger.Debug("Existing item has a better preferred word score, skipping");
-                return false;
-            }
+            //if (!IsPreferredWordUpgradable(currentScore, newScore))
+            //{
+            //    _logger.Debug("Existing item has a better preferred word score, skipping");
+            //    return false;
+            //}
 
             if (IsPreferredWordUpgradable(currentScore, newScore))
             {
